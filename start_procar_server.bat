@@ -37,6 +37,7 @@ if "%PORT%"=="0" (
 )
 
 echo Starting server on 127.0.0.1:%PORT%
+echo Project URL: http://127.0.0.1:%PORT%/index.html
 
 if not exist "%CHROME_EXE%" (
   echo Chrome not found at %CHROME_EXE%

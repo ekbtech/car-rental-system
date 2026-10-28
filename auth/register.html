@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create Account — Pro Car</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="manifest" href="../manifest.webmanifest" />
+  </head>
+  <body class="bg-dark text-light">
+    <main class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <a
+            class="navbar-brand fw-bold d-inline-block mb-5"
+            href="../index.html"
+            ><span class="text-warning">Pro</span>Car</a
+          >
+          <button
+            type="button"
+            class="btn btn-outline-light btn-sm float-end"
+            onclick="refreshPage()"
+            title="Refresh registration"
+            aria-label="Refresh registration"
+          >
+            ↻
+          </button>
+          <div class="card">
+            <div class="card-body p-4 p-lg-5">
+              <span class="badge bg-warning text-dark mb-3">Join Pro Car</span>
+              <h1 class="h2 mb-2">Create your account</h1>
+              <p class="text-secondary mb-4">
+                A better way to find and manage your rentals.
+              </p>
+              <div id="auth-message"></div>
+              <form id="register-form">
+                <label class="form-label" for="role">Register as</label
+                ><select
+                  class="form-select bg-dark text-light mb-3"
+                  id="role"
+                  required
+                >
+                  <option value="customer">Customer</option>
+                  <option value="driver">Driver</option>
+                  <option value="company">Rental company</option>
+                </select>
+                <div id="role-help" class="small text-secondary mb-3">
+                  Customers can browse and book available cars.
+                </div>
+                <label class="form-label" for="name"
+                  >Full name or company name</label
+                ><input
+                  class="form-control bg-dark text-light mb-3"
+                  id="name"
+                  required
+                  autocomplete="name"
+                /><label class="form-label" for="email">Email</label
+                ><input
+                  class="form-control bg-dark text-light mb-3"
+                  id="email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                /><label class="form-label" for="phone"
+                  >Phone <span class="text-secondary">(optional)</span></label
+                ><input
+                  class="form-control bg-dark text-light mb-3"
+                  id="phone"
+                  type="tel"
+                  autocomplete="tel"
+                />
+                <div id="cv-field" class="d-none mb-3">
+                  <label class="form-label" for="cv">Driver CV</label>
+                  <input
+                    class="form-control bg-dark text-light"
+                    id="cv"
+                    type="file"
+                    accept=".pdf,.doc,.docx,application/pdf"
+                  />
+                  <div class="form-text text-secondary">
+                    PDF or Word document, maximum 5 MB. Admin approval is
+                    required.
+                  </div>
+                </div>
+                <label class="form-label" for="password">Password</label
+                ><input
+                  class="form-control bg-dark text-light mb-4"
+                  id="password"
+                  type="password"
+                  minlength="8"
+                  required
+                  autocomplete="new-password"
+                /><button
+                  class="btn btn-warning text-dark fw-semibold w-100"
+                  type="submit"
+                >
+                  Create account
+                </button>
+              </form>
+              <p class="text-secondary mt-4 mb-0">
+                Already registered?
+                <a class="text-warning" href="login.html">Sign in</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div
+      class="modal fade"
+      id="approval-modal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5">Application sent</h2>
+          </div>
+          <div class="modal-body">
+            <p id="approval-message" class="mb-0">
+              Your application was sent to the admin. Please wait for approval
+              before signing in.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              id="approval-ok"
+              type="button"
+              class="btn btn-warning text-dark fw-semibold"
+            >
+              OK, go to sign in
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/install.js"></script>
+  </body>
+</html>

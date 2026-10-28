@@ -4,15 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Pro Car — Car Rental Without Clutter</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="manifest" href="manifest.webmanifest" />
   </head>
   <body class="bg-dark text-light">
     <nav
-      class="navbar navbar-expand-lg navbar-dark bg-black border-bottom border-secondary mb-5"
+      class="navbar navbar-expand-lg navbar-dark bg-black border-bottom border-secondary"
     >
       <div class="container">
         <a class="navbar-brand fw-bold fs-4" href="index.html">
@@ -30,6 +32,17 @@
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
               <a class="nav-link" href="cars.html">Browse Cars</a>
+            </li>
+            <li class="nav-item d-flex align-items-center">
+              <button
+                type="button"
+                class="btn btn-outline-light btn-sm ms-lg-2"
+                onclick="refreshPage()"
+                title="Refresh page"
+                aria-label="Refresh page"
+              >
+                ↻
+              </button>
             </li>
             <li class="nav-item" id="nav-user-menu" style="display: none">
               <div class="nav-link dropdown">
@@ -66,81 +79,155 @@
       </div>
     </nav>
 
-    <main class="container">
-      <!-- Hero Section -->
-      <section class="hero-section mb-5">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <span class="badge bg-warning text-dark mb-4"
-              >Car hire only. Fast search. Direct inquiry.</span
-            >
-            <h1 class="display-4 fw-bold mb-4">
-              Find the right car hire without the clutter
-            </h1>
-            <p class="lead text-secondary mb-4">
-              Browse vetted rentals, compare prices, and book directly with
-              rental providers. Built for global car hire discovery.
-            </p>
-            <div class="d-flex flex-column flex-sm-row gap-3 mb-4">
-              <a
-                href="cars.html"
-                class="btn btn-lg btn-warning text-dark fw-semibold"
-                >Browse Cars</a
-              >
-              <a
-                href="auth/register.html"
-                class="btn btn-lg btn-outline-light fw-semibold"
-                >Register</a
-              >
-              <a
-                href="auth/login.html"
-                class="btn btn-lg btn-outline-light fw-semibold"
-                >Sign In</a
-              >
+    <main>
+      <section class="home-hero">
+        <div class="container home-hero-inner">
+          <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+              <span class="eyebrow">A better way to move</span>
+              <h1>Drive something that feels like <em>you.</em></h1>
+              <p class="home-hero-copy">
+                Discover a considered collection of cars, vans, and SUVs from
+                trusted local providers. Compare clearly, book confidently, and
+                get on with the journey.
+              </p>
+              <div class="d-flex flex-wrap gap-3 mb-4">
+                <a
+                  href="cars.html"
+                  class="btn btn-warning btn-lg text-dark fw-semibold"
+                  >Explore the fleet <span aria-hidden="true">↗</span></a
+                >
+                <a
+                  href="auth/register.html"
+                  class="btn btn-outline-light btn-lg"
+                  >Join Pro Car</a
+                >
+              </div>
+              <div class="hero-proof">
+                <span class="proof-mark">✦</span><span>Transparent pricing</span
+                ><span class="proof-divider"></span><span>Local providers</span
+                ><span class="proof-divider"></span
+                ><span>Flexible bookings</span>
+              </div>
             </div>
-            <div class="alert alert-dark border border-secondary" role="alert">
-              <strong>Get Started:</strong> Register an account, browse
-              available cars, make a booking, and enjoy seamless rental
-              experience.
-            </div>
-
-            <div
-              class="hero-stats-box mt-4 p-4 rounded-4 border border-secondary"
-            >
-              <div
-                class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-4 text-center text-sm-start"
-              >
-                <div>
-                  <div class="small text-warning mb-2 text-uppercase">
-                    Available Fleet
-                  </div>
-                  <div
-                    class="d-flex flex-wrap gap-4 justify-content-center justify-content-sm-start"
-                    id="hero-stats"
-                  ></div>
+            <div class="col-lg-5">
+              <div class="hero-visual" aria-label="Featured premium vehicle">
+                <div class="hero-visual-label">
+                  Featured drive <span>01 / 04</span>
+                </div>
+                <img
+                  src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=85"
+                  alt="Premium car on an open road"
+                />
+                <div class="hero-visual-caption">
+                  <span
+                    >Make the ordinary<br /><strong
+                      >feel memorable.</strong
+                    ></span
+                  ><span class="hero-arrow">↗</span>
                 </div>
               </div>
+            </div>
+          </div>
+          <form id="home-search-form" class="home-search-bar">
+            <label for="home-search">Find your next car</label>
+            <div class="home-search-controls">
+              <input
+                id="home-search"
+                type="search"
+                placeholder="Search make, model, category, or city"
+              /><select id="home-category" aria-label="Choose a category">
+                <option value="">Every category</option>
+                <option>Sedan</option>
+                <option>SUV</option>
+                <option>Luxury</option>
+                <option>Electric</option>
+                <option>Van</option>
+                <option>Convertible</option></select
+              ><button
+                class="btn btn-warning text-dark fw-semibold"
+                type="submit"
+              >
+                Search fleet
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="home-metrics">
+        <div class="container">
+          <div class="row g-0" id="hero-stats">
+            <div class="col-md-3 metric">
+              <strong>—</strong><span>Vehicles ready</span>
+            </div>
+            <div class="col-md-3 metric">
+              <strong>—</strong><span>Categories</span>
+            </div>
+            <div class="col-md-3 metric">
+              <strong>—</strong><span>Locations</span>
+            </div>
+            <div class="col-md-3 metric">
+              <strong>24/7</strong><span>Browse online</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Featured Cars -->
-      <section class="featured-cars mb-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2 class="mb-0">Featured Vehicles</h2>
-          <a href="cars.html" class="btn btn-outline-warning btn-sm"
-            >Browse All</a
+      <section class="home-section container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Find your fit</span>
+            <h2>There is a car for every kind of day.</h2>
+          </div>
+          <a href="cars.html" class="text-warning fw-semibold"
+            >View the full fleet <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <div class="category-grid">
+          <a
+            href="cars.html?category=Sedan"
+            class="category-tile category-sedan"
+            ><span>01</span><strong>Everyday ease</strong
+            ><small>Sedans & compact cars</small></a
+          ><a href="cars.html?category=SUV" class="category-tile category-suv"
+            ><span>02</span><strong>Room to roam</strong
+            ><small>SUVs & family drives</small></a
+          ><a
+            href="cars.html?category=Luxury"
+            class="category-tile category-luxury"
+            ><span>03</span><strong>Arrive differently</strong
+            ><small>Luxury & executive</small></a
+          ><a
+            href="cars.html?category=Electric"
+            class="category-tile category-electric"
+            ><span>04</span><strong>Go electric</strong
+            ><small>Quiet, clean performance</small></a
+          >
+        </div>
+      </section>
+
+      <section class="featured-cars home-section container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">The edit</span>
+            <h2>Cars worth getting into.</h2>
+          </div>
+          <a href="cars.html" class="text-warning fw-semibold"
+            >Browse all cars <span aria-hidden="true">↗</span></a
           >
         </div>
         <div id="featured-cars-grid" class="row g-4"></div>
       </section>
 
-      <section class="reviews mb-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2 class="mb-0">Customer Reviews</h2>
-          <a href="review.html" class="btn btn-outline-light btn-sm"
-            >Leave a Review</a
+      <section class="reviews home-section container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">From the road</span>
+            <h2>Good journeys, shared.</h2>
+          </div>
+          <a href="review.html" class="text-warning fw-semibold"
+            >Leave a review <span aria-hidden="true">↗</span></a
           >
         </div>
         <div id="reviews-grid" class="row g-4"></div>
@@ -154,5 +241,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/api.js?v=20260721"></script>
     <script src="js/app.js?v=20260721b"></script>
+    <script src="js/install.js"></script>
   </body>
 </html>

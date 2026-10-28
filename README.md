@@ -31,21 +31,31 @@ Modern, responsive car rental platform built with:
 - WAMP or another MySQL-enabled local server stack
 - Web browser
 
-### Setup Steps
+### WAMP Setup (recommended)
 
-1. Start WAMP and make sure MySQL is running.
-2. Run the app from the project root with a PHP development server:
+1. Copy this folder to `C:\wamp64\www\procar`.
+2. Start **Apache** and **MySQL** in the WAMP control panel.
+3. Copy `.env.example` to `.env`. The defaults work with a standard WAMP MySQL installation (`root` with a blank password). Update `MYSQL_USER` and `MYSQL_PASS` if your WAMP installation uses different credentials.
+4. Open the Apache port shown in the WAMP control panel. In a standard WAMP installation this may be `http://localhost/procar/index.html`; if Apache is configured on another port, include it, for example `http://localhost:8081/procar/index.html`.
+
+This repository is currently on the Desktop. WAMP will not serve it from `localhost/procar` until you copy it into `C:\wamp64\www\procar`. Alternatively, double-click `start_procar_server.bat`; it serves the current folder directly and opens a working URL such as `http://127.0.0.1:8082/index.html`.
+
+The first request automatically creates the `pro_car` database, tables, sample cars, and the development admin account:
+
+- Email: `admin@procar.local`
+- Password: `admin123`
+
+Change the admin password before using this outside local development.
+
+### PHP Development Server
+
+If Apache is not available, PHP 8.1+ and the `pdo_mysql` extension are required:
 
 ```bash
-cd "path/to/pro car"
-php -S localhost:80
+php -S 127.0.0.1:8080 -t .
 ```
 
-3. Open the app in your browser:
-
-```text
-http://localhost/index.html
-```
+Then open `http://127.0.0.1:8080/index.html`. The included `start_procar_server.bat` starts the same server with the WAMP PHP runtime when available.
 
 ## Project Structure
 
@@ -94,7 +104,7 @@ pro car/
 
 ### Authentication
 
-- `POST backend/auth.php?action=register` - Register new user
+- `POST backend/auth.php?action=register` - Register new user (returns a 2FA enrollment challenge)
 - `POST backend/auth.php?action=login` - User login
 - `POST backend/auth.php?action=logout` - User logout
 
@@ -122,6 +132,7 @@ pro car/
 ## Testing
 
 ### Test Credentials
+
 if you dont have an account you
 first register ....then after registering you log in into your account
 
@@ -148,6 +159,28 @@ VALUES ('Admin', 'admin@procar.local', '0123456789', '$2y$10$...', 4, 1);
 4. **Book Car** - Select dates and complete booking
 5. **Dashboard** - View bookings and manage account
 6. **Admin Panel** - Manage cars, bookings, users
+
+## Mandatory Google Authenticator 2FA
+
+Every account must enroll in a compatible authenticator and verify a six-digit code after the password step. Existing sessions are invalidated unless the server session has completed 2FA.
+
+2FA endpoints:
+
+- `POST backend/two_factor.php?action=enrollment_start`
+- `POST backend/two_factor.php?action=enrollment_confirm`
+- `POST backend/two_factor.php?action=login_verify`
+- `POST backend/two_factor.php?action=recovery_verify`
+- `POST backend/two_factor.php?action=replacement_start`
+- `POST backend/two_factor.php?action=regenerate_recovery_codes`
+- `POST backend/two_factor.php?action=admin_reset`
+
+Configure `TOTP_ENCRYPTION_KEY` in `.env` before production use. If it is absent, the application creates an excluded `.env` key automatically for local development; preserve that key with database backups. Never commit `.env` or TOTP recovery secrets.
+
+Run the focused TOTP test with the installed PHP executable:
+
+```powershell
+& "C:\wamp64\bin\php\php8.4.15\php.exe" tests\totp_test.php
+```
 
 ## Security Notes
 
@@ -181,9 +214,9 @@ if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
 
 ### Using WAMP
 
-1. Copy the project into `C:\wamp64\www\procar`
-2. Start Apache and MySQL from the WAMP control panel
-3. Open `http://localhost/procar/index.html`
+1. Copy the project into `C:\wamp64\www\procar`.
+2. Start Apache and MySQL from the WAMP control panel.
+3. Open the WAMP Apache port, for example `http://localhost:8081/procar/index.html` if Apache is listening on port 8081.
 
 ### Using the local PHP server
 
@@ -210,9 +243,10 @@ If port 8080 is in use, choose another free port and update the URL accordingly.
 
 ### Database Connection Error
 
-- Check MySQL is running
-- Verify credentials in `backend/db.php`
-- Ensure database exists: `pro_car`
+- Check that MySQL is running in WAMP.
+- Check the values in `.env` against WAMP’s MySQL settings.
+- Visit `http://localhost/procar/backend/auth.php?action=me` and inspect the PHP error log if the API still returns a database error.
+- The `pro_car` database is created automatically when the configured MySQL user has permission to create databases. Otherwise create it in phpMyAdmin and reload the site.
 
 ### 404 on PHP Endpoints
 
@@ -222,9 +256,9 @@ If port 8080 is in use, choose another free port and update the URL accordingly.
 
 ### Login/Register Not Working
 
-- Clear browser localStorage: `localStorage.clear()`
-- Check browser console for errors (F12)
-- Verify database connection
+- Use the site through Apache or PHP, not by opening the HTML file directly. PHP endpoints cannot run from `file://`.
+- Clear browser storage with `localStorage.clear()` and try again.
+- Check the browser console and the Apache/PHP error log.
 
 ## Development Notes
 
@@ -353,3 +387,32 @@ SOURCE sql/schema_full.sql;
 - MySQL Workbench
 - DataGrip
 - DBeaver
+
+## Help & Support inbox
+
+The dashboard support form submits to `backend/support.php`. The backend validates the request, stores it in the `support_tickets` table, associates authenticated user IDs when available, and forwards the submission to Formspree endpoint `https://formspree.io/f/meaagydz`.
+
+### Formspree configuration
+
+1. Copy `.env.example` to `.env`.
+2. Keep `FORMSPREE_ENDPOINT=https://formspree.io/f/meaagydz` and `FORMSPREE_FORM_HASHID=meaagydz`.
+3. For automatic webhook delivery, enable a Professional or Business Simple Webhook for the form and configure the public webhook URL:
+
+```text
+https://your-domain.example/backend/support.php?action=webhook
+```
+
+4. Configure the webhook signing secret as `FORMSPREE_WEBHOOK_SECRET` in `.env`.
+5. If the plan provides the private submissions API, configure `FORMSPREE_API_KEY`. The admin inbox can then sync recent submissions when it is loaded.
+6. Configure `MAIL_FROM` and the PHP/WAMP mail transport if admin reply email delivery is required.
+
+Never expose `FORMSPREE_API_KEY` or `FORMSPREE_WEBHOOK_SECRET` in HTML or JavaScript. The backend database schema is created automatically when `database()` is first called.
+
+### Testing
+
+1. Sign in, open the Quick Actions **Help & Support** item, and submit a request with a name, email, subject, and message.
+2. Sign in as an admin and open **Help & Support** in the admin tab list.
+3. Verify the request appears, filter it by status, open it, change its status, and add an admin reply.
+4. Verify Formspree receives the submission in the Formspree dashboard.
+5. If webhook/API configuration is added, submit another request and verify no duplicate ticket appears after Formspree delivery.
+6. Check direct webhook delivery with Formspree is signed with `Formspree-Signature`; unsigned deliveries are rejected.

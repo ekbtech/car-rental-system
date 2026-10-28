@@ -4,148 +4,52 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dashboard — Pro Car</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="manifest" href="manifest.webmanifest" />
   </head>
-  <body class="bg-dark text-light">
-    <nav
-      class="navbar navbar-expand-lg navbar-dark bg-black border-bottom border-secondary mb-4"
-    >
-      <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html"
-          ><span class="text-warning">Pro</span>Car</a
-        >
-        <div class="ms-auto d-flex gap-2">
-          <span id="user-email" class="nav-link"></span>
-          <button id="logout-btn" class="btn btn-outline-warning btn-sm">
-            Logout
-          </button>
+  <body class="dashboard-page">
+    <button id="profile-menu-trigger" type="button" class="profile-menu-trigger d-lg-none" aria-controls="dashboard-profile-sidebar" aria-expanded="false" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+    <aside id="dashboard-profile-sidebar" class="dashboard-sidebar" aria-expanded="false" aria-hidden="false">
+      <div class="sidebar-brand-row"><a class="sidebar-brand" href="index.html" aria-label="ProCar home"><svg viewBox="0 0 160 42" aria-hidden="true"><path d="M8 31h5l5-8h35l5 8h8l-6-15H25L15 24H8z" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="66" y="31" fill="currentColor" font-family="Georgia,serif" font-size="25" font-weight="700">ProCar</text></svg></a><button id="profile-menu-close" class="sidebar-close" type="button" aria-label="Close navigation menu">×</button></div>
+      <nav class="sidebar-scroll" aria-label="Dashboard navigation">
+        <div class="sidebar-nav-main">
+          <button class="sidebar-link active" type="button" data-dashboard-nav="dashboard"><span class="sidebar-icon" data-lucide="layout-dashboard"></span><span>Dashboard</span></button>
+          <button class="sidebar-link" type="button" data-dashboard-nav="cars"><span class="sidebar-icon" data-lucide="car-front"></span><span>Browse Cars</span></button>
+          <button class="sidebar-link" type="button" data-dashboard-nav="bookings"><span class="sidebar-icon" data-lucide="calendar-days"></span><span>My Bookings</span></button>
+          <button class="sidebar-link" type="button" data-dashboard-nav="favorites"><span class="sidebar-icon" data-lucide="heart"></span><span>Favorites</span></button>
         </div>
-      </div>
-    </nav>
-
-    <aside
-      id="dashboard-profile-sidebar"
-      class="dashboard-sidebar"
-      aria-expanded="true"
-    >
-      <div class="card bg-secondary border-secondary p-3 sidebar-card">
-        <div
-          class="d-flex align-items-center justify-content-between gap-3 mb-3 sidebar-header"
-        >
-          <div class="d-flex align-items-center gap-3">
-            <button
-              id="sidebar-avatar-btn"
-              type="button"
-              class="profile-avatar rounded-circle bg-dark border border-secondary d-flex align-items-center justify-content-center"
-              aria-label="Toggle sidebar"
-            >
-              <span class="sidebar-avatar-icon">≡</span>
-            </button>
-            <div class="sidebar-user-info">
-              <h5 id="profile-name" class="mb-0"></h5>
-              <p id="profile-email" class="text-secondary mb-0"></p>
-            </div>
-          </div>
-        </div>
-        <div class="sidebar-navigation">
-          <button
-            id="sidebar-menu-toggle"
-            type="button"
-            class="sidebar-menu-toggle btn btn-outline-light w-100 text-start d-flex align-items-center justify-content-between mb-3"
-            aria-expanded="true"
-          >
-            <span>Profile Menu</span>
-            <span class="menu-toggle-icon">▾</span>
-          </button>
-
-          <div id="sidebar-menu-collapse" class="sidebar-menu-collapse show">
-            <div class="list-group mb-3 sidebar-items">
-              <button
-                type="button"
-                class="list-group-item list-group-item-action bg-dark text-light border-secondary text-start"
-                data-profile-action="manage-profile"
-              >
-                <span class="me-2">👤</span
-                ><span data-i18n="profile.manage">Manage Profile</span>
-              </button>
-              <button
-                type="button"
-                class="list-group-item list-group-item-action bg-dark text-light border-secondary text-start"
-                data-profile-action="notifications"
-              >
-                <span class="me-2">🔔</span
-                ><span data-i18n="profile.notifications">Notifications</span>
-              </button>
-              <button
-                type="button"
-                class="list-group-item list-group-item-action bg-dark text-light border-secondary text-start"
-                data-profile-action="language-settings"
-              >
-                <span class="me-2">🌐</span
-                ><span data-i18n="profile.languageSettings"
-                  >Language Settings</span
-                >
-              </button>
-              <button
-                type="button"
-                class="list-group-item list-group-item-action bg-dark text-light border-secondary text-start"
-                data-profile-action="theme"
-              >
-                <span class="me-2">🌙</span
-                ><span data-i18n="profile.theme">Theme</span>
-              </button>
-              <button
-                type="button"
-                class="list-group-item list-group-item-action bg-dark text-light border-secondary text-start"
-                data-profile-action="password"
-              >
-                <span class="me-2">🔒</span
-                ><span data-i18n="profile.password">Change Password</span>
-              </button>
-              <button
-                type="button"
-                class="list-group-item list-group-item-action bg-dark text-light border-secondary text-start"
-                data-profile-action="help"
-              >
-                <span class="me-2">❓</span
-                ><span data-i18n="profile.help">Help & Support</span>
-              </button>
-              <button
-                type="button"
-                class="list-group-item list-group-item-action bg-dark text-light border-secondary text-start"
-                data-profile-action="about"
-              >
-                <span class="me-2">ℹ️</span
-                ><span data-i18n="profile.about">About App</span>
-              </button>
-              <button
-                type="button"
-                class="list-group-item list-group-item-action bg-dark text-light border-secondary text-start"
-                data-profile-action="logout"
-              >
-                <span class="me-2">↩️</span
-                ><span data-i18n="profile.logout">Log Out</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div
-          id="profile-action-content"
-          class="card bg-dark border-secondary p-3"
-        >
-          <p class="text-secondary mb-0" data-i18n="profile.selectOption">
-            Select a profile option to view or update your account settings.
-          </p>
-        </div>
-      </div>
+        <details class="sidebar-section" open><summary><span>Quick Actions</span><span class="sidebar-chevron" data-lucide="chevron-up"></span></summary><div class="sidebar-section-links">
+          <button class="sidebar-link" type="button" data-dashboard-nav="cars"><span class="sidebar-icon" data-lucide="car-front"></span><span>Browse Cars</span></button>
+          <button class="sidebar-link" type="button" data-dashboard-nav="bookings"><span class="sidebar-icon" data-lucide="calendar-days"></span><span>My Bookings</span></button>
+          <button class="sidebar-link" type="button" data-profile-action="notifications"><span class="sidebar-icon" data-lucide="bell"></span><span>Notifications</span><span class="sidebar-count">3</span></button>
+          <button class="sidebar-link" type="button" data-profile-action="authenticator"><span class="sidebar-icon" data-lucide="shield-check"></span><span>Authenticator &amp; Recovery</span></button>
+          <button class="sidebar-link" type="button" data-profile-action="theme"><span class="sidebar-icon" data-lucide="moon"></span><span>Theme</span></button>
+          <button class="sidebar-link" type="button" data-profile-action="about"><span class="sidebar-icon" data-lucide="info"></span><span>About App</span></button>
+          <button class="sidebar-link" type="button" data-profile-action="help"><span class="sidebar-icon" data-lucide="circle-help"></span><span>Help &amp; Support</span></button>
+          <button class="sidebar-link" type="button" data-profile-action="install"><span class="sidebar-icon" data-lucide="download"></span><span>Install App</span></button>
+        </div></details>
+        <details class="sidebar-section" open><summary><span>Account</span><span class="sidebar-chevron" data-lucide="chevron-down"></span></summary><div class="sidebar-section-links">
+          <button class="sidebar-link" type="button" data-profile-action="manage-profile"><span class="sidebar-icon" data-lucide="user-round"></span><span>Manage Profile</span></button>
+          <button class="sidebar-link" type="button" data-profile-action="security"><span class="sidebar-icon" data-lucide="shield"></span><span>Security Settings</span></button>
+        </div></details>
+      </nav>
+      <div class="sidebar-account"><div class="sidebar-profile"><span class="sidebar-avatar">S</span><div class="sidebar-profile-copy"><strong id="profile-name">User</strong><span id="profile-email">user@example.com</span></div><span class="sidebar-profile-chevron" data-lucide="chevron-right"></span></div><button id="logout-btn" class="sidebar-logout" type="button"><span class="sidebar-icon" data-lucide="log-out"></span><span>Logout</span></button></div>
     </aside>
 
-    <div class="container dashboard-main-content">
+    <div class="dashboard-main-content">
+      <header class="dashboard-topbar"><button id="mobile-sidebar-trigger" class="mobile-sidebar-trigger" type="button" aria-controls="dashboard-profile-sidebar" aria-expanded="false" aria-label="Open navigation menu"><span></span><span></span><span></span></button><label class="dashboard-search" for="dashboard-search-input"><span data-lucide="search"></span><input id="dashboard-search-input" type="search" placeholder="Search for cars, brands or locations..." autocomplete="off" /></label><button id="dashboard-notifications" class="dashboard-notification" type="button" aria-label="Notifications"><span data-lucide="bell"></span><span class="notification-dot">3</span></button><span id="topbar-avatar" class="topbar-avatar">S</span></header>
+      <main id="dashboard-overview" class="dashboard-overview"><section class="dashboard-hero"><div class="dashboard-hero-content"><span class="dashboard-hero-eyebrow">Rent a car, explore more</span><h1>Your Next Journey<br />Starts Here</h1><p>Reliable cars. Flexible bookings. Unmatched freedom.</p><button id="hero-browse-cars" class="dashboard-primary-button" type="button"><span class="sidebar-icon" data-lucide="car-front"></span>Browse Cars<span class="button-arrow" data-lucide="arrow-right"></span></button></div></section>
+        <div class="dashboard-feature-grid"><section class="dashboard-bookings-card"><div class="dashboard-section-heading"><h2>My Bookings</h2><button id="view-all-bookings" type="button">View All <span data-lucide="arrow-right"></span></button></div><div id="dashboard-bookings-preview"></div></section><section class="travel-confidence-card"><span class="confidence-icon" data-lucide="shield-check"></span><div><h2>Travel with Confidence</h2><p>Fully insured. Well maintained.<br />Always ready.</p></div><button id="travel-learn-more" type="button">Learn More <span data-lucide="arrow-right"></span></button></section></div>
+        <div class="dashboard-trust-grid"><article><span class="trust-icon" data-lucide="shield-check"></span><div><h3>Secure &amp; Reliable</h3><p>Your safety is our priority.</p></div></article><article><span class="trust-icon" data-lucide="headphones"></span><div><h3>24/7 Support</h3><p>We're always here to help.</p></div></article><article><span class="trust-icon" data-lucide="star"></span><div><h3>Trusted by Thousands</h3><p>Great rides, happy customers.</p></div></article></div>
+      </main>
+      <div class="modal fade" id="profile-action-modal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content dashboard-modal-content"><div class="modal-header border-0"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div id="profile-action-content" class="modal-body pt-0"></div></div></div></div>
+
       <div
         class="modal fade"
         id="paymentMethodModal"
@@ -472,6 +376,12 @@
             >
           </button>
         </li>
+        <li class="nav-item" id="admin-support-tab-li" role="presentation" style="display: none">
+          <button class="nav-link text-secondary" id="admin-support-tab" data-bs-toggle="tab" data-bs-target="#admin-support-pane" type="button" role="tab">
+            Help &amp; Support
+            <span id="support-notification-count" class="badge bg-danger">0</span>
+          </button>
+        </li>
       </ul>
 
       <!-- Tab Content -->
@@ -542,7 +452,140 @@
           <div
             id="company-portal-content"
             class="card bg-secondary border-secondary p-4"
-          ></div>
+          >
+            <form id="company-car-form" class="row g-3">
+              <div class="col-12">
+                <h5 class="text-warning">Submit a vehicle for review</h5>
+                <p class="text-secondary mb-0">
+                  Approved listings are published to the customer dashboard
+                  after admin approval.
+                </p>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="company-make">Make</label
+                ><input
+                  id="company-make"
+                  class="form-control bg-dark text-light"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="company-model">Model</label
+                ><input
+                  id="company-model"
+                  class="form-control bg-dark text-light"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="company-year">Year</label
+                ><input
+                  id="company-year"
+                  type="number"
+                  min="1950"
+                  class="form-control bg-dark text-light"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="company-category">Category</label
+                ><select
+                  id="company-category"
+                  class="form-select bg-dark text-light"
+                >
+                  <option>Sedan</option>
+                  <option>SUV</option>
+                  <option>Luxury</option>
+                  <option>Electric</option>
+                  <option>Van</option>
+                  <option>Pickup</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="company-seats">Seats</label
+                ><input
+                  id="company-seats"
+                  type="number"
+                  min="1"
+                  max="30"
+                  value="5"
+                  class="form-control bg-dark text-light"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="company-price"
+                  >Price per day</label
+                ><input
+                  id="company-price"
+                  type="number"
+                  min="1"
+                  step="0.01"
+                  class="form-control bg-dark text-light"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="company-location">Location</label
+                ><input
+                  id="company-location"
+                  class="form-control bg-dark text-light"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="company-image">Photo URL</label
+                ><input
+                  id="company-image"
+                  type="url"
+                  class="form-control bg-dark text-light"
+                  placeholder="https://..."
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="company-transmission"
+                  >Transmission</label
+                ><select
+                  id="company-transmission"
+                  class="form-select bg-dark text-light"
+                >
+                  <option>Automatic</option>
+                  <option>Manual</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="company-fuel">Fuel type</label
+                ><select
+                  id="company-fuel"
+                  class="form-select bg-dark text-light"
+                >
+                  <option>Petrol</option>
+                  <option>Diesel</option>
+                  <option>Hybrid</option>
+                  <option>Electric</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="company-description"
+                  >Description and features</label
+                ><textarea
+                  id="company-description"
+                  class="form-control bg-dark text-light"
+                  rows="3"
+                  placeholder="Air conditioning, GPS, luggage capacity..."
+                ></textarea>
+              </div>
+              <div class="col-12">
+                <button
+                  class="btn btn-warning text-dark fw-semibold"
+                  type="submit"
+                >
+                  Send vehicle to admin
+                </button>
+              </div>
+            </form>
+            <div id="company-submissions" class="row g-3 mt-3"></div>
+          </div>
         </div>
 
         <!-- Admin Notifications -->
@@ -553,6 +596,27 @@
         >
           <h2 class="mb-4" data-i18n="heading.notifications">Notifications</h2>
           <div id="admin-notifications-list"></div>
+        </div>
+
+        <!-- Admin Help & Support Inbox -->
+        <div class="tab-pane fade" id="admin-support-pane" role="tabpanel">
+          <div class="support-inbox-header">
+            <div>
+              <span class="support-inbox-eyebrow">Support inbox</span>
+              <h2 class="mb-0">Help &amp; Support</h2>
+            </div>
+            <button id="support-inbox-refresh" type="button" class="btn support-refresh-button">Refresh</button>
+          </div>
+          <div id="support-status-filters" class="support-status-filters" role="group" aria-label="Filter support requests">
+            <button type="button" class="active" data-support-filter="all">All <span id="support-filter-all">0</span></button>
+            <button type="button" data-support-filter="new">New <span id="support-filter-new">0</span></button>
+            <button type="button" data-support-filter="in_progress">In Progress <span id="support-filter-progress">0</span></button>
+            <button type="button" data-support-filter="resolved">Resolved <span id="support-filter-resolved">0</span></button>
+          </div>
+          <div id="support-inbox-list" class="support-inbox-list">
+            <p class="text-secondary mb-0">Loading support requests...</p>
+          </div>
+          <div id="support-ticket-detail" class="support-ticket-detail d-none"></div>
         </div>
 
         <!-- Admin Panel -->
@@ -783,6 +847,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/api.js?v=20260721"></script>
-    <script src="js/dashboard.js?v=20260721"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script src="js/dashboard.js?v=20261028"></script>
+    <script src="js/install.js"></script>
   </body>
 </html>

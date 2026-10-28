@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign In — Pro Car</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body class="bg-dark text-light">
+    <main class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <a
+            class="navbar-brand fw-bold d-inline-block mb-5"
+            href="../index.html"
+            ><span class="text-warning">Pro</span>Car</a
+          >
+          <button
+            type="button"
+            class="btn btn-outline-light btn-sm float-end"
+            onclick="refreshPage()"
+            title="Refresh sign in"
+            aria-label="Refresh sign in"
+          >
+            ↻
+          </button>
+          <div class="card">
+            <div class="card-body p-4 p-lg-5">
+              <span class="badge bg-warning text-dark mb-3">Welcome back</span>
+              <h1 class="h2 mb-2">Sign in to Pro Car</h1>
+              <p class="text-secondary mb-4">
+                Manage bookings and find your next drive.
+              </p>
+              <div id="auth-message"></div>
+              <form id="login-form">
+                <label class="form-label" for="email">Email</label
+                ><input
+                  class="form-control bg-dark text-light mb-3"
+                  id="email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                /><label class="form-label" for="password">Password</label
+                ><input
+                  class="form-control bg-dark text-light mb-4"
+                  id="password"
+                  type="password"
+                  required
+                  autocomplete="current-password"
+                /><button
+                  class="btn btn-warning text-dark fw-semibold w-100"
+                  type="submit"
+                >
+                  Sign in
+                </button>
+              </form>
+              <section id="2fa-panel" class="d-none">
+                <div id="2fa-message"></div>
+                <div id="enrollment-panel" class="d-none">
+                  <p class="text-secondary">Mandatory authenticator setup. Scan this QR code with Google Authenticator.</p>
+                  <div id="qr-code" class="bg-white p-3 d-inline-block rounded mb-3"></div>
+                  <details class="mb-3"><summary>Manual setup key</summary><code id="manual-secret" class="d-block mt-2 text-warning text-break"></code></details>
+                  <label class="form-label" for="enrollment-code">Six-digit setup code</label>
+                  <input id="enrollment-code" class="form-control bg-dark text-light mb-3" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" />
+                  <button id="confirm-enrollment" class="btn btn-warning text-dark fw-semibold w-100" type="button">Verify and activate</button>
+                </div>
+                <div id="challenge-panel" class="d-none">
+                  <p class="text-secondary">Enter the six-digit code shown in Google Authenticator.</p>
+                  <label class="form-label" for="challenge-code">Authenticator code</label>
+                  <input id="challenge-code" class="form-control bg-dark text-light mb-3" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" />
+                  <button id="verify-challenge" class="btn btn-warning text-dark fw-semibold w-100" type="button">Verify</button>
+                  <button id="show-recovery" class="btn btn-link text-warning mt-2" type="button">Use a recovery code instead</button>
+                  <div id="recovery-panel" class="d-none mt-3">
+                    <label class="form-label" for="recovery-code">Recovery code</label>
+                    <input id="recovery-code" class="form-control bg-dark text-light mb-3" autocomplete="off" />
+                    <button id="verify-recovery" class="btn btn-outline-warning w-100" type="button">Use recovery code</button>
+                  </div>
+                </div>
+                <div id="recovery-codes-panel" class="d-none">
+                  <h2 class="h5">Save your recovery codes</h2>
+                  <p class="text-secondary">Each code can be used once. Copy them before continuing.</p>
+                  <pre id="recovery-codes" class="bg-black text-warning border border-secondary rounded p-3"></pre>
+                  <button id="acknowledge-recovery" class="btn btn-warning text-dark fw-semibold w-100" type="button">I saved these codes</button>
+                </div>
+                <button id="2fa-signout" class="btn btn-outline-light w-100 mt-3" type="button">Cancel and sign out</button>
+              </section>
+              <p class="text-secondary mt-4 mb-0">
+                New to Pro Car?
+                <a class="text-warning" href="register.html"
+                  >Create an account</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="../js/api.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="../js/auth.js"></script>
+  </body>
+</html>
