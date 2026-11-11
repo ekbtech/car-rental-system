@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Pro Car — Online Car Rental System
 
 Modern, responsive car rental platform built with:
@@ -417,7 +416,6 @@ Never expose `FORMSPREE_API_KEY` or `FORMSPREE_WEBHOOK_SECRET` in HTML or JavaSc
 4. Verify Formspree receives the submission in the Formspree dashboard.
 5. If webhook/API configuration is added, submit another request and verify no duplicate ticket appears after Formspree delivery.
 6. Check direct webhook delivery with Formspree is signed with `Formspree-Signature`; unsigned deliveries are rejected.
-=======
 # Pro Car — Online Car Rental System
 
 Modern, responsive car rental platform built with:
@@ -524,4 +522,3 @@ pro car/
 - `GET backend/payments.php?booking_id=ID` - Get payment info
 - `POST backend/payments.php` - Create payment
 
->>>>>>> 266c62fefc17d5f08db61ab90af00066b1fa1fd2
