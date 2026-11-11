@@ -43,8 +43,6 @@ This repository is currently on the Desktop. WAMP will not serve it from `localh
 
 The first request automatically creates the `pro_car` database, tables, sample cars, and the development admin account:
 
-- Email: `admin@procar.local`
-- Password: `admin123`
 
 Change the admin password before using this outside local development.
 
